@@ -6,17 +6,17 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-import 'constants.dart';
-import 'login_service.dart';
+import '../../constant/constants.dart';
+import '../services/login_service.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => HomePageState();
+  State<StatefulWidget> createState() => HomeScreenState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomeScreenState extends State<HomeScreen> {
   final TextEditingController singleInviteeUserIDTextCtrl =
       TextEditingController();
   final TextEditingController groupInviteeUserIDsTextCtrl =

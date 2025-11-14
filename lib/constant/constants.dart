@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-import 'home_page.dart';
-import 'login_page.dart';
+import '../screen/home_screen/home_screen.dart';
+import '../screen/login_screen/login_screen.dart';
 
 class PageRouteNames {
   static const String login = '/login';
@@ -17,9 +17,9 @@ const TextStyle textStyle = TextStyle(
 );
 
 Map<String, WidgetBuilder> routes = {
-  PageRouteNames.login: (context) => const LoginPage(),
+  PageRouteNames.login: (context) => const LoginScreen(),
   PageRouteNames.home: (context) => const ZegoUIKitPrebuiltCallMiniPopScope(
-        child: HomePage(),
+        child: HomeScreen(),
       ),
 };
 

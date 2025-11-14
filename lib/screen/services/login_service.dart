@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-import 'common.dart';
-import 'constants.dart';
+import '../../constant/common.dart';
+import '../../constant/constants.dart';
 
 Future<void> login({
   required String userID,

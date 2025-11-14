@@ -17,10 +17,11 @@ A professional Flutter starter template for building video and audio calling app
 
 Before you begin, ensure you have the following installed:
 
-- Flutter SDK (>=2.16.2 <4.0.0)
+- Flutter SDK (>=2.16.2 <4.0.0) or FVM for Flutter version management
 - Dart SDK
 - Android Studio / Xcode (for mobile development)
 - A ZegoCloud account ([Sign up here](https://console.zegocloud.com))
+- (Optional) [FVM](https://fvm.app/) - Flutter Version Management
 
 ## 🚀 Quick Start
 
@@ -31,13 +32,39 @@ git clone https://github.com/The-Black-Shadow/zegocloud_video_call.git
 cd zegocloud_video_call
 ```
 
-### 2. Install Dependencies
+### 2. (Optional) Install FVM
+
+This project uses FVM (Flutter Version Management) for consistent Flutter versions across teams. If you want to use FVM:
+
+**Install FVM:**
+```bash
+# macOS/Linux
+brew tap leoafarias/fvm
+brew install fvm
+
+# Windows (using Chocolatey)
+choco install fvm
+
+# Or install globally via pub
+dart pub global activate fvm
+```
+
+**Use the project's Flutter version:**
+```bash
+fvm use
+```
+
+Then use `fvm flutter` instead of `flutter` for all commands.
+
+### 3. Install Dependencies
 
 ```bash
 flutter pub get
+# or if using FVM
+# fvm flutter pub get
 ```
 
-### 3. Configure ZegoCloud Credentials
+### 4. Configure ZegoCloud Credentials
 
 1. Get your `App ID` and `App Sign` from [ZegoCloud Console](https://console.zegocloud.com)
 
@@ -50,10 +77,12 @@ ZEGO_APP_SIGN=your_app_sign_here
 
 > **Important:** Never commit your `.env` file to version control. It's already added to `.gitignore`
 
-### 4. Run the Application
+### 5. Run the Application
 
 ```bash
 flutter run
+# or if using FVM
+# fvm flutter run
 ```
 
 ## 📁 Project Structure

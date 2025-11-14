@@ -1,353 +1,142 @@
-# Quick start
+# ZegoCloud Video Call Starter
 
----
+A professional Flutter starter template for building video and audio calling applications using ZegoCloud's UIKit. This project provides a complete implementation of one-on-one and group calling features with offline call invitation support, making it easy to integrate real-time communication into your Flutter apps.
 
-## Add ZegoUIKitPrebuiltCallWithInvitation as dependencies
+## 🌟 Features
 
-Run this command with Flutter:
+- ✅ **One-on-One Video/Audio Calls** - Crystal clear video and audio calling
+- ✅ **Group Video/Audio Calls** - Support for multiple participants
+- ✅ **Offline Call Invitations** - Receive call notifications even when app is closed
+- ✅ **Call Minimization** - Continue using other features while on a call
+- ✅ **Custom Avatars** - Personalized user experience
+- ✅ **Environment Variables** - Secure credential management with `.env` file
+- ✅ **Android & iOS Support** - Full cross-platform compatibility
+- ✅ **Production Ready** - Clean architecture and professional code structure
 
-```
-flutter pub add zego_uikit_signaling_plugin
-```
+## 📋 Prerequisites
 
-## Import SDK
+Before you begin, ensure you have the following installed:
 
-Now in your Dart code, you can import prebuilt.
+- Flutter SDK (>=2.16.2 <4.0.0)
+- Dart SDK
+- Android Studio / Xcode (for mobile development)
+- A ZegoCloud account ([Sign up here](https://console.zegocloud.com))
 
-```dart
-import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-```
+## 🚀 Quick Start
 
+### 1. Clone the Repository
 
-## Integrate the SDK with the offline call invitation feature
-
-1. Wrap your widget with ZegoUIKitPrebuiltCallWithInvitation, and specify the `userID` and `userName` for connecting the Call Kit service. 
-
-
-
-
-#### Props of ZegoUIKitPrebuiltCallWithInvitation component
-
-<table>
-  <colgroup>
-    <col width="20%">
-    <col width="22%">
-    <col width="8%">
-    <col width="50%">
-  </colgroup>
-<tbody><tr>
-<th>Property&nbsp;</th>
-<th>Type&nbsp;</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>appID</td>
-<td>int&nbsp;</td>
-<td>Yes</td>
-<td>The App ID you get from [ZEGOCLOUD Admin Console](https://console.zegocloud.com).&nbsp;</td>
-</tr>
-<tr>
-<td>appSign</td>
-<td>String&nbsp;</td>
-<td>Yes</td>
-<td>The App Sign you get from [ZEGOCLOUD Admin Console](https://console.zegocloud.com).&nbsp;</td>
-</tr>
-<tr>
-<td>userID</td>
-<td>String&nbsp;</td>
-<td>Yes</td>
-<td>`userID` can be something like a phone number or the user ID on your own user system. userID can only contain numbers, letters, and underlines (_).&nbsp;&nbsp;</td>
-</tr>
-<tr>
-<td>userName&nbsp;</td>
-<td>String</td>
-<td>Yes</td>
-<td>`userName` can be any character or the user name on your own user system.</td>
-</tr>
-<tr>
-<td>plugins&nbsp;&nbsp;</td>
-<td>List< IZegoUIKitPlugin ></td>
-<td>Yes</td>
-<td>Fixed value. Set it to `ZegoUIKitSignalingPlugin` as shown in the sample.&nbsp;</td>
-</tr>
-<tr>
-<td>ringtoneConfig&nbsp;</td>
-<td>ZegoRingtoneConfig&nbsp;</td>
-<td>No</td>
-<td>`ringtoneConfig.incomingCallPath` and `ringtoneConfig.outgoingCallPath` is the asset path of the ringtone file, which requires you a manual import. To know how to import, refer to [Custom prebuilt UI](https://docs.zegocloud.com/article/14748).&nbsp;</td>
-</tr>
-<tr>
-<td>requireConfig&nbsp;&nbsp;</td>
-<td>ZegoUIKitPrebuiltCallConfig Function(
-    ZegoCallInvitationData)?&nbsp;</td>
-<td>No</td>
-<td>This method is called when you receive a call invitation. You can control the SDK behaviors by returning the required config based on the data parameter. For more details, see [Custom prebuilt UI](https://docs.zegocloud.com/article/14748).&nbsp;</td>
-</tr>
-<tr>
-<td>notifyWhenAppRunningInBackgroundOrQuit</td>
-<td>bool&nbsp;</td>
-<td>No</td>
-<td>Change `notifyWhenAppRunningInBackgroundOrQuit` to false if you don't need to receive a call invitation notification while your app running in the background or quit.</td>
-</tr>
-<tr>
-<td>isIOSSandboxEnvironment</td>
-<td>bool</td>
-<td>No</td>
-<td>To publish your app to TestFlight or App Store, set the `isIOSSandboxEnvironment` to false before starting building. To debug locally, set it to true. Ignore this when the `notifyWhenAppRunningInBackgroundOrQuit` is false.</td>
-</tr>
-<tr>
-<td>androidNotificationConfig&nbsp;</td>
-<td>ZegoAndroidNotificationConfig?</td>
-<td>No</td>
-<td>This property needs to be set when you are building an Android app and when the `notifyWhenAppRunningInBackgroundOrQuit` is true.  `androidNotificationConfig.channelID` must be the same as the FCM Channel ID in [ZEGOCLOUD Admin Console](https://console.zegocloud.com), and the `androidNotificationConfig.channelName` can be an arbitrary value.&nbsp;</td>
-</tr>
-<tr>
-<td>innerText</td>
-<td>ZegoCallInvitationInnerText</td>
-<td>No</td>
-<td>To modify the UI text, use this property. For more details, see [Custom prebuilt UI](https://docs.zegocloud.com/article/14748).&nbsp;&nbsp;</td>
-</tr>
-</tbody></table>
-
-For more parameters, go to [Custom prebuilt UI](https://docs.zegocloud.com/article/14748).
-
-```dart
-@override
-Widget build(BuildContext context) {
-   return ZegoUIKitPrebuiltCallWithInvitation(
-      appID: yourAppID,
-      serverSecret: yourServerSecret,
-      appSign: yourAppSign,
-      userID: userID,
-      userName: userName,
-      config: ZegoUIKitPrebuiltCallInvitationConfig(
-            notifyWhenAppRunningInBackgroundOrQuit: true,
-            isIOSSandboxEnvironment: false,
-      ),
-      plugins: [ZegoUIKitSignalingPlugin()],
-      child: YourWidget(),
-   );
-}
+```bash
+git clone https://github.com/The-Black-Shadow/zegocloud_video_call.git
+cd zegocloud_video_call
 ```
 
-2. Add the button for making call invitations, and pass in the ID of the user you want to call.
+### 2. Install Dependencies
 
-#### Props of ZegoSendCallInvitationButton
-
-<table>
-  <colgroup>
-    <col width="15%">
-    <col width="15%">
-    <col width="10%">
-    <col width="60%">
-  </colgroup>
-<tbody><tr>
-<th>Property&nbsp;&nbsp;</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>invitees</td>
-<td>List< ZegoUIKitUser ></td>
-<td>Yes</td>
-<td>The information of the callee. userID and userName are required. For example: [{ userID: inviteeID, userName: inviteeName }]</td>
-</tr>
-<tr>
-<td>isVideoCall&nbsp;</td>
-<td>bool</td>
-<td>Yes</td>
-<td>If true, a video call is made when the button is pressed. Otherwise, a voice call is made.</td>
-</tr>
-<tr>
-<td>resourceID&nbsp;</td>
-<td>String?</td>
-<td>No</td>
-<td>`resourceID` can be used to specify the ringtone of an offline call invitation, which must be set to the same value as the Push Resource ID in [ZEGOCLOUD Admin Console](https://console.zegocloud.com). This only takes effect when the `notifyWhenAppRunningInBackgroundOrQuit` is true.</td>
-</tr>
-<tr>
-<td>timeoutSeconds&nbsp;</td>
-<td>int</td>
-<td>No</td>
-<td>The timeout duration. It's 60 seconds by default.</td>
-</tr>
-</tbody></table>
-
-For more parameters, go to [Custom prebuilt UI](https://docs.zegocloud.com/article/14748).
-
-```dart
-ZegoSendCallInvitationButton(
-   isVideoCall: true,
-   resourceID: "zegouikit_call",    // For offline call notification
-   invitees: [
-      ZegoUIKitUser(
-         id: targetUserID,
-         name: targetUserName,
-      ),
-      ...
-      ZegoUIKitUser(
-         id: targetUserID,
-         name: targetUserName,
-      )
-   ],
-)
+```bash
+flutter pub get
 ```
 
-Now, you can make call invitations by simply clicking on this button.
+### 3. Configure ZegoCloud Credentials
 
+1. Get your `App ID` and `App Sign` from [ZegoCloud Console](https://console.zegocloud.com)
 
-## How to customize the calling page?
+2. Create a `.env` file in the project root:
 
-> this example is trying to make different menubar between audio call or video call
-
-```dart
-@override
-Widget build(BuildContext context) {
-   return ZegoUIKitPrebuiltCallWithInvitation(
-      appID: yourAppID,
-      appSign: yourAppSign,
-      userID: userID,
-      userName: userName,
-      plugins: [ZegoUIKitSignalingPlugin()],
-      //  we will ask you for config when we need it, you can customize your app with data
-      requireConfig: (ZegoCallInvitationData data) {
-        var config = ZegoUIKitPrebuiltCallConfig();
-        config.turnOnCameraWhenJoining =
-            ZegoLiveStreamingInvitationType.videoCall == data.type;
-        if (ZegoLiveStreamingInvitationType.videoCall == data.type) {
-          config.bottomMenuBarConfig.extendButtons = [
-            IconButton(color: Colors.white, icon: const Icon(Icons.phone), onPressed:() {}),
-            IconButton(color: Colors.white, icon: const Icon(Icons.cookie), onPressed:() {}),
-            IconButton(color: Colors.white, icon: const Icon(Icons.speaker), onPressed:() {}),
-            IconButton(color: Colors.white, icon: const Icon(Icons.air), onPressed:() {}),
-          ];
-        }
-        return config;
-      },
-      child: YourWidget(),
-   );
-}
+```env
+ZEGO_APP_ID=your_app_id_here
+ZEGO_APP_SIGN=your_app_sign_here
 ```
 
-![customize_config](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/invitation/customize_config.gif)
+> **Important:** Never commit your `.env` file to version control. It's already added to `.gitignore`
 
-## Build & Run
+### 4. Run the Application
 
-### 1. Config your project
-
-#### Android
-
-1. If your project is created with Flutter 2.x.x, you will need to open the `your_project/android/app/build.gradle` file, and modify the `compileSdkVersion` to **33**.
-
-
-   ![compileSdkVersion](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/compile_sdk_version.png)
-
-2. And in the same file, edit the `minSdkVersion`.
-
-   ```xml
-   minSdkVersion 21
-   ```
-
-![Pics/ZegoUIKit/Flutter/android_class_confusion.png](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/android_min_sdk_21.png)
-
-3. Need to add app permissions, Open the file `your_project/app/src/main/AndroidManifest.xml`, add the following code:
-
-   ```xml
-   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-   <uses-permission android:name="android.permission.RECORD_AUDIO" />
-   <uses-permission android:name="android.permission.INTERNET" />
-   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-   <uses-permission android:name="android.permission.CAMERA" />
-   <uses-permission android:name="android.permission.BLUETOOTH" />
-   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-   <uses-permission android:name="android.permission.WAKE_LOCK" />
-   <uses-permission android:name="android.permission.VIBRATE"/>
-   ```
-
-<img src="https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/invitation/permission_android.png" width=800>
-
-4. Prevent code obfuscation.
-
-To prevent the ZEGO SDK public class names from being obfuscated, please complete the following steps:
-
-1. Create `proguard-rules.pro` file under [your_project > android > app] with content as show below:
-```
--keep class **.zego.** { *; }
--keep class **.**.zego_zpns.** { *; }
+```bash
+flutter run
 ```
 
-2. Add the following config code to the release part of the `your_project/android/app/build.gradle` file.
+## 📁 Project Structure
+
 ```
-proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+zegocloud_video_call/
+├── android/                    # Android native code
+├── ios/                        # iOS native code
+├── lib/
+│   ├── common.dart            # Shared utilities and widgets
+│   ├── constants.dart         # App constants and route names
+│   ├── home_page.dart         # Home screen with call functionality
+│   ├── login_page.dart        # User authentication screen
+│   ├── login_service.dart     # Login logic and ZegoCloud initialization
+│   ├── main.dart              # App entry point
+│   ├── my_app.dart            # Main app widget configuration
+│   └── util.dart              # Helper functions
+├── assets/
+│   └── image/                 # App images and assets
+├── .env                       # Environment variables (create this)
+├── .env.example              # Example environment file
+├── pubspec.yaml              # Dependencies and project config
+└── README.md                 # This file
 ```
 
-![image](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/android_class_confusion_zpns.png)
+## 🎯 Use Cases
 
+This starter template is perfect for building:
 
-#### iOS
+- 📞 **Telehealth Apps** - Remote doctor consultations
+- 👥 **Social Networking** - Video chat features
+- 💼 **Remote Work Tools** - Team video conferencing
+- 🎓 **E-Learning Platforms** - Virtual classrooms
+- 🎮 **Gaming Communities** - Voice/video chat while gaming
+- 👨‍👩‍👧‍👦 **Family Connect Apps** - Stay in touch with loved ones
 
-1. Need add app permissions, open ·your_project/ios/Runner/Info.plist·, add the following code inside the "dict" tag:
+## 🔧 Configuration
 
-```plist
-<key>NSCameraUsageDescription</key>
-<string>We require camera access to connect to a call</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>We require microphone access to connect to a call</string>
+### Android Setup
+
+1. **Minimum SDK Version**: Edit `android/app/build.gradle`
+
+```gradle
+minSdkVersion 21
+compileSdkVersion 33
 ```
 
-<img src="https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/permission_ios.png" width=800>
+2. **Permissions**: Already configured in `AndroidManifest.xml`
+   - Camera, Microphone, Internet, Bluetooth, and more
 
-2. To use the notifications and build your app correctly, navigate to the Build Settings tab, and set the following build options for your target app.
+3. **ProGuard Rules**: Code obfuscation prevention is already configured
 
-<img src="https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/ios_distribution.png" width=800>
+### iOS Setup
 
+1. **Deployment Target**: iOS 11.0 or higher
 
-Refer to and set the following build options:
+2. **Permissions**: Already configured in `Info.plist`
+   - Camera Usage
+   - Microphone Usage
 
-- In the **Runner** Target:
-    
-    a. **Build Libraries for Distribution** -> `NO`
+3. **Build Settings**:
+   - Build Libraries for Distribution → NO
+   - iOS Deployment Target → 11 or greater
 
-    b. **Only safe API extensions** -> `NO`
+## 🔔 Enable Offline Call Notifications (Optional)
 
-    c. **iOS Deployment Target** -> `11 or greater`
+To receive call invitations when the app is closed:
 
-- In other Targets:
-        
-    a. **Build Libraries for Distribution** -> `NO`
+### For iOS:
 
-    b. **Only safe API extensions** -> `YES`
+1. Contact [ZegoCloud Technical Support](https://discord.gg/ExaKJvBbxy)
+2. Follow the [iOS Offline Notification Setup Guide](https://youtu.be/rzdRY8bDqdo)
+3. Configure APNs certificates in [Apple Developer Console](https://developer.apple.com)
 
+### For Android:
 
-# Enable offline call invitation
+1. Add Firebase Messaging to `android/app/build.gradle`:
 
-If you want to receive call invitation notifications, do the following: 
-1. Click the button below to contact ZEGOCLOUD Technical Support.
-
-    <a href="https://discord.gg/ExaKJvBbxy">
-    <img src="https://img.shields.io/discord/980014613179555870?color=5865F2&logo=discord&logoColor=white" alt="ZEGOCLOUD"/>
-</a>
-
-2. Then, follow the instructions in the video below.
-
-- iOS:
-
-[![Watch the video](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/videos/how_to_enable_offline_call_invitation_ios.png)](https://youtu.be/rzdRY8bDqdo)
-
-Resource may help: [Apple Developer](https://developer.apple.com)
-
-- Android:
-
-1. Add this line to your project's `my_project/android/app/build.gradle` file as instructed.
-
-```xml
+```gradle
 implementation 'com.google.firebase:firebase-messaging:21.1.0'
 ```
 
-2. In your project's `/app/src/main/res/raw` directory, create a `keep.xml` file with the following contents:
+2. Create `keep.xml` in `app/src/main/res/raw/`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -355,34 +144,129 @@ implementation 'com.google.firebase:firebase-messaging:21.1.0'
     tools:keep="@raw/*">
 </resources>
 ```
-![call_keep_xml.png](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/call/call_keep_xml.png)
 
-3. Then, follow the instructions in the video below.
-[![Watch the video](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/videos/how_to_enable_offline_call_invitation_android.png)](https://youtu.be/mhetL3MTKsE)
+3. Download `google-services.json` from [Firebase Console](https://console.firebase.google.com/)
+4. Follow the [Android Offline Notification Setup Guide](https://youtu.be/mhetL3MTKsE)
 
-Resource may help: [Firebase Console](https://console.firebase.google.com/)
+## 💻 How to Use
 
-4. Check whether the local config is set up properly.
-- Download the [zego_check_android_offline_notification.py\|_blank](https://github.com/ZEGOCLOUD/zego_uikit_prebuilt_call_example_flutter/blob/master/call_with_offline_invitation/zego_check_android_offline_notification.py) to your project's root directory, and run the following command:
+### Login
 
-```bash
-python3 zego_check_android_offline_notification.py
+1. Launch the app
+2. Enter a phone number (used as User ID)
+3. Enter any password (for testing purposes)
+4. Click "Sign In"
+
+### Making Calls
+
+**One-on-One Call:**
+1. Enter the invitee's User ID
+2. Click the video or audio button
+
+**Group Call:**
+1. Enter multiple User IDs separated by commas
+2. Click the video or audio button
+
+### During a Call
+
+- Toggle camera/microphone
+- Switch between front/rear camera
+- Minimize the call window
+- Hang up
+
+## 🛠️ Key Dependencies
+
+```yaml
+dependencies:
+  zego_uikit: ^2.28.23
+  zego_uikit_signaling_plugin: ^2.8.15
+  zego_uikit_prebuilt_call: ^4.17.9
+  flutter_dotenv: ^5.1.0
+  shared_preferences: ^2.2.3
 ```
-- You will see the following if everything goes well: 
+
+## 📝 Environment Variables
+
+This project uses `flutter_dotenv` for secure credential management.
+
+**Create `.env` file:**
+```env
+ZEGO_APP_ID=1234567890
+ZEGO_APP_SIGN=your_64_character_app_sign_here
 ```
-✅ The google-service.json is in the right location.
-✅ The package name matches google-service.json.
-✅ The project level gradle file is ready.
-✅ The plugin config in the app-level gradle file is correct.
-✅ Firebase dependencies config in the app-level gradle file is correct.
-✅ Firebase-Messaging dependencies config in the app-level gradle file is correct.
+
+**Access in code:**
+```dart
+int.parse(dotenv.env['ZEGO_APP_ID'] ?? '0')
+dotenv.env['ZEGO_APP_SIGN'] ?? ''
 ```
 
-### 2. Run & Debug
+## 🔒 Security Best Practices
 
-Now you can simply click the **Run** or **Debug** button to build and run your App on your device.
-![run_flutter_project.jpg](https://storage.zego.im/sdk-doc/Pics/ZegoUIKit/Flutter/run_flutter_project.jpg)
+- ✅ `.env` is in `.gitignore` - credentials won't be committed
+- ✅ Use environment variables for all sensitive data
+- ✅ Never hardcode API keys in source code
+- ✅ Regenerate credentials if accidentally exposed
 
-## Related guide
+## 🐛 Troubleshooting
 
-[Custom prebuilt UI](https://docs.zegocloud.com/article/14748)
+### Build Errors
+
+**Problem**: Gradle build fails  
+**Solution**: Ensure `minSdkVersion` is 21 and `compileSdkVersion` is 33
+
+**Problem**: iOS build fails  
+**Solution**: Check deployment target is iOS 11+ and pod install is complete
+
+### Runtime Issues
+
+**Problem**: Can't receive calls  
+**Solution**: Verify App ID and App Sign are correct in `.env`
+
+**Problem**: Camera/microphone not working  
+**Solution**: Check permissions are granted in device settings
+
+### Environment Variables
+
+**Problem**: `.env` not loading  
+**Solution**: Ensure `await dotenv.load(fileName: ".env");` is in `main()`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- [ZegoCloud](https://www.zegocloud.com/) for their excellent SDK
+- Flutter team for the amazing framework
+- All contributors who help improve this starter template
+
+## 📞 Support
+
+- [ZegoCloud Documentation](https://docs.zegocloud.com/)
+- [ZegoCloud Discord](https://discord.gg/ExaKJvBbxy)
+- [Issue Tracker](https://github.com/yourusername/zegocloud-video-call-starter/issues)
+
+## 🚀 What's Next?
+
+- [ ] Add screen sharing functionality
+- [ ] Implement chat messaging
+- [ ] Add recording features
+- [ ] Create admin dashboard
+- [ ] Add analytics and monitoring
+
+---
+
+**Built with ❤️ using Flutter and ZegoCloud**
+
+*Star ⭐ this repo if you find it helpful!*

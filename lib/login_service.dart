@@ -1,14 +1,11 @@
-// Package imports:
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
-// Project imports:
 import 'common.dart';
 import 'constants.dart';
 
-/// local virtual login
 Future<void> login({
   required String userID,
   required String userName,
@@ -20,15 +17,12 @@ Future<void> login({
   currentUser.name = 'user_$userID';
 }
 
-/// local virtual logout
 Future<void> logout() async {
   final prefs = await SharedPreferences.getInstance();
   prefs.remove(cacheUserIDKey);
 }
 
-/// on user login
 Future<void> onUserLogin() async {
-  /// 4/5. initialized ZegoUIKitPrebuiltCallInvitationService when account is logged in or re-logged in
   await ZegoUIKitPrebuiltCallInvitationService().init(
     appID: int.parse(dotenv.env['ZEGO_APP_ID'] ?? '0'),
     appSign: dotenv.env['ZEGO_APP_SIGN'] ?? '',
@@ -75,7 +69,6 @@ Future<void> onUserLogin() async {
 
       config.avatarBuilder = customAvatarBuilder;
 
-      /// support minimizing, show minimizing button
       config.topMenuBar.isVisible = true;
       config.topMenuBar.buttons
           .insert(0, ZegoCallMenuBarButtonName.minimizingButton);
@@ -85,8 +78,6 @@ Future<void> onUserLogin() async {
   );
 }
 
-/// on user logout
 void onUserLogout() {
-  /// 5/5. de-initialization ZegoUIKitPrebuiltCallInvitationService when account is logged out
   ZegoUIKitPrebuiltCallInvitationService().uninit();
 }

@@ -1,11 +1,8 @@
-// Dart imports:
 import 'dart:convert';
 import 'dart:io' show Platform;
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
@@ -14,10 +11,10 @@ Future<String> getUniqueUserId() async {
   final deviceInfo = DeviceInfoPlugin();
   if (Platform.isIOS) {
     final iosDeviceInfo = await deviceInfo.iosInfo;
-    deviceID = iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    deviceID = iosDeviceInfo.identifierForVendor; 
   } else if (Platform.isAndroid) {
     final androidDeviceInfo = await deviceInfo.androidInfo;
-    deviceID = androidDeviceInfo.id; // unique ID on Android
+    deviceID = androidDeviceInfo.id; 
   }
 
   if (deviceID != null && deviceID.length < 4) {

@@ -26,6 +26,7 @@ dependencies:
   connectivity_plus: ^6.1.5
   rename: ^3.1.0
   flutter_dotenv: ^5.1.0
+  get: ^4.7.2
 
 dependency_overrides:
   intl: ^0.18.1

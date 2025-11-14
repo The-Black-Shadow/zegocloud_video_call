@@ -1,36 +1,18 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 
 import '../../constant/constants.dart';
-import '../services/login_service.dart';
-import '../../utils/util.dart';
+import 'controller/login_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => LoginScreenState();
-}
-
-class LoginScreenState extends State<LoginScreen> {
-  final _userIDTextCtrl = TextEditingController(text: 'user_id');
-  final _passwordVisible = ValueNotifier<bool>(false);
-
-  @override
-  void initState() {
-    super.initState();
-
-    getUniqueUserId().then((userID) async {
-      setState(() {
-        _userIDTextCtrl.text = userID;
-      });
-    });
-  }
-
+class LoginScreen extends StatelessWidget {
+   LoginScreen({Key? key}) : super(key: key);
+final controller = Get.find<LoginController>();
   @override
   Widget build(BuildContext context) {
+    
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: WillPopScope(
@@ -43,12 +25,12 @@ class LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              logo(),
+              _logo(),
               const SizedBox(height: 50),
-              userIDEditor(),
-              passwordEditor(),
+              _userIDEditor(controller),
+              _passwordEditor(controller),
               const SizedBox(height: 30),
-              signInButton(),
+              _signInButton(controller),
             ],
           ),
         ),
@@ -56,7 +38,7 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget logo() {
+  Widget _logo() {
     return Center(
       child: RichText(
         text: const TextSpan(
@@ -74,55 +56,43 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget userIDEditor() {
+  Widget _userIDEditor(LoginController controller) {
     return TextFormField(
-      controller: _userIDTextCtrl,
+      controller: controller.userIDTextCtrl,
       decoration: const InputDecoration(
         labelText: 'Phone Num.(User for user id)',
       ),
     );
   }
 
-  Widget passwordEditor() {
-    return ValueListenableBuilder<bool>(
-      valueListenable: _passwordVisible,
-      builder: (context, isPasswordVisible, _) {
-        return TextFormField(
-          obscureText: !isPasswordVisible,
-          decoration: InputDecoration(
-            labelText: 'Password.(Any character for test)',
-            suffixIcon: IconButton(
-              icon: Icon(
-                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-              ),
-              onPressed: () {
-                _passwordVisible.value = !_passwordVisible.value;
-              },
+  Widget _passwordEditor(LoginController controller) {
+    return Obx(() {
+      return TextFormField(
+        obscureText: !controller.passwordVisible.value,
+        decoration: InputDecoration(
+          labelText: 'Password.(Any character for test)',
+          suffixIcon: IconButton(
+            icon: Icon(
+              controller.passwordVisible.value ? Icons.visibility : Icons.visibility_off,
             ),
+            onPressed: controller.togglePasswordVisibility,
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 
-  Widget signInButton() {
-    return ElevatedButton(
-      onPressed: _userIDTextCtrl.text.isEmpty
-          ? null
-          : () async {
-              login(
-                userID: _userIDTextCtrl.text,
-                userName: 'user_${_userIDTextCtrl.text}',
-              ).then((value) {
-                onUserLogin().then((_) {
-                  Navigator.pushNamed(
-                    context,
-                    PageRouteNames.home,
-                  );
-                });
-              });
-            },
-      child: const Text('Sign In', style: textStyle),
+  Widget _signInButton(LoginController controller) {
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: controller.userIDTextCtrl,
+      builder: (context, value, _) {
+        return ElevatedButton(
+          onPressed: controller.userIDTextCtrl.text.isEmpty
+              ? null
+              : () => controller.signIn(),
+          child: const Text('Sign In', style: textStyle),
+        );
+      },
     );
   }
 }

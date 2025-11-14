@@ -1,38 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import 'package:faker/faker.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zegocloud_video_call/constant/constants.dart';
 
-import '../../constant/constants.dart';
-import '../services/login_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+import 'controller/home_controller.dart';
 
-  @override
-  State<StatefulWidget> createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
-  final TextEditingController singleInviteeUserIDTextCtrl =
-      TextEditingController();
-  final TextEditingController groupInviteeUserIDsTextCtrl =
-      TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ZegoUIKitPrebuiltCallInvitationService().enterAcceptedOfflineCall();
-    });
-  }
+class HomeScreen extends StatelessWidget {
+   HomeScreen({Key? key}) : super(key: key);
+    final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -42,21 +26,21 @@ class HomeScreenState extends State<HomeScreen> {
             Positioned(
               top: 20,
               right: 10,
-              child: logoutButton(),
+              child: _logoutButton(controller, context),
             ),
             Positioned(
               top: 50,
               left: 10,
               child: Text('Your Phone Number: ${currentUser.id}'),
             ),
-            userListView(),
+            _userListView(controller, context),
           ],
         ),
       ),
     );
   }
 
-  Widget logoutButton() {
+  Widget _logoutButton(HomeController controller, BuildContext context) {
     return Ink(
       width: 35,
       height: 35,
@@ -74,23 +58,14 @@ class HomeScreenState extends State<HomeScreen> {
             color: Colors.white,
             onPressed: isMinimized
                 ? null
-                : () {
-                    logout().then((value) {
-                      onUserLogout();
-
-                      Navigator.pushNamed(
-                        context,
-                        PageRouteNames.login,
-                      );
-                    });
-                  },
+                : () => controller.performLogout(context),
           );
         },
       ),
     );
   }
 
-  Widget userListView() {
+  Widget _userListView(HomeController controller, BuildContext context) {
     final RandomGenerator random = RandomGenerator();
     final Faker faker = Faker();
 
@@ -103,10 +78,10 @@ class HomeScreenState extends State<HomeScreen> {
           late TextEditingController inviteeUsersIDTextCtrl;
           late List<Widget> userInfo;
           if (0 == index) {
-            inviteeUsersIDTextCtrl = singleInviteeUserIDTextCtrl;
+            inviteeUsersIDTextCtrl = controller.singleInviteeUserIDTextCtrl;
             userInfo = [
               const Text('invitee id ('),
-              inviteeIDFormField(
+              _inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
                   FilteringTextInputFormatter.allow(RegExp(
@@ -118,10 +93,10 @@ class HomeScreenState extends State<HomeScreen> {
               const Text(')'),
             ];
           } else if (1 == index) {
-            inviteeUsersIDTextCtrl = groupInviteeUserIDsTextCtrl;
+            inviteeUsersIDTextCtrl = controller.groupInviteeUserIDsTextCtrl;
             userInfo = [
               const Text('group id ('),
-              inviteeIDFormField(
+              _inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
                   FilteringTextInputFormatter.allow(RegExp(
@@ -151,15 +126,27 @@ class HomeScreenState extends State<HomeScreen> {
                   const SizedBox(width: 20),
                   ...userInfo,
                   Expanded(child: Container()),
-                  sendCallButton(
+                  _sendCallButton(
                     isVideoCall: false,
                     inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
-                    onCallFinished: onSendCallInvitationFinished,
+                    onCallFinished: (code, message, errorInvitees) =>
+                        controller.onSendCallInvitationFinished(
+                      code,
+                      message,
+                      errorInvitees,
+                      context,
+                    ),
                   ),
-                  sendCallButton(
+                  _sendCallButton(
                     isVideoCall: true,
                     inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
-                    onCallFinished: onSendCallInvitationFinished,
+                    onCallFinished: (code, message, errorInvitees) =>
+                        controller.onSendCallInvitationFinished(
+                      code,
+                      message,
+                      errorInvitees,
+                      context,
+                    ),
                   ),
                   const SizedBox(width: 20),
                 ],
@@ -175,111 +162,73 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onSendCallInvitationFinished(
-    String code,
-    String message,
-    List<String> errorInvitees,
-  ) {
-    if (errorInvitees.isNotEmpty) {
-      String userIDs = "";
-      for (int index = 0; index < errorInvitees.length; index++) {
-        if (index >= 5) {
-          userIDs += '... ';
-          break;
-        }
-
-        var userID = errorInvitees.elementAt(index);
-        userIDs += userID + ' ';
-      }
-      if (userIDs.isNotEmpty) {
-        userIDs = userIDs.substring(0, userIDs.length - 1);
-      }
-
-      var message = 'User doesn\'t exist or is offline: $userIDs';
-      if (code.isNotEmpty) {
-        message += ', code: $code, message:$message';
-      }
-      showToast(
-        message,
-        position: StyledToastPosition.top,
-        context: context,
-      );
-    } else if (code.isNotEmpty) {
-      showToast(
-        'code: $code, message:$message',
-        position: StyledToastPosition.top,
-        context: context,
-      );
-    }
-  }
-}
-
-Widget inviteeIDFormField({
-  required TextEditingController textCtrl,
-  List<TextInputFormatter>? formatters,
-  String hintText = '',
-  String labelText = '',
-}) {
-  const textStyle = TextStyle(fontSize: 12.0);
-  return Expanded(
-    flex: 100,
-    child: SizedBox(
-      height: 80,
-      child: TextFormField(
-        style: textStyle,
-        controller: textCtrl,
-        inputFormatters: formatters,
-        maxLines: 3,
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: hintText,
-          hintStyle: textStyle,
-          labelText: labelText,
-          labelStyle: textStyle,
-          border: const OutlineInputBorder(),
+  Widget _inviteeIDFormField({
+    required TextEditingController textCtrl,
+    List<TextInputFormatter>? formatters,
+    String hintText = '',
+    String labelText = '',
+  }) {
+    const textStyle = TextStyle(fontSize: 12.0);
+    return Expanded(
+      flex: 100,
+      child: SizedBox(
+        height: 80,
+        child: TextFormField(
+          style: textStyle,
+          controller: textCtrl,
+          inputFormatters: formatters,
+          maxLines: 3,
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: hintText,
+            hintStyle: textStyle,
+            labelText: labelText,
+            labelStyle: textStyle,
+            border: const OutlineInputBorder(),
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget sendCallButton({
-  required bool isVideoCall,
-  required TextEditingController inviteeUsersIDTextCtrl,
-  void Function(String code, String message, List<String>)? onCallFinished,
-}) {
-  return ValueListenableBuilder<TextEditingValue>(
-    valueListenable: inviteeUsersIDTextCtrl,
-    builder: (context, inviteeUserID, _) {
-      var invitees = getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
+  Widget _sendCallButton({
+    required bool isVideoCall,
+    required TextEditingController inviteeUsersIDTextCtrl,
+    void Function(String code, String message, List<String>)? onCallFinished,
+  }) {
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: inviteeUsersIDTextCtrl,
+      builder: (context, inviteeUserID, _) {
+        var invitees = _getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
 
-      return ZegoSendCallInvitationButton(
-        isVideoCall: isVideoCall,
-        invitees: invitees,
-        resourceID: "zego_data",
-        iconSize: const Size(40, 40),
-        buttonSize: const Size(50, 50),
-        timeoutSeconds: 30,
-        onPressed: onCallFinished,
-      );
-    },
-  );
-}
+        return ZegoSendCallInvitationButton(
+          isVideoCall: isVideoCall,
+          invitees: invitees,
+          resourceID: "zego_data",
+          iconSize: const Size(40, 40),
+          buttonSize: const Size(50, 50),
+          timeoutSeconds: 30,
+          onPressed: onCallFinished,
+        );
+      },
+    );
+  }
 
-List<ZegoUIKitUser> getInvitesFromTextCtrl(String textCtrlText) {
-  List<ZegoUIKitUser> invitees = [];
+  List<ZegoUIKitUser> _getInvitesFromTextCtrl(String textCtrlText) {
+    List<ZegoUIKitUser> invitees = [];
 
-  var inviteeIDs = textCtrlText.trim().replaceAll('，', '');
-  inviteeIDs.split(",").forEach((inviteeUserID) {
-    if (inviteeUserID.isEmpty) {
-      return;
-    }
+    var inviteeIDs = textCtrlText.trim().replaceAll('，', '');
+    inviteeIDs.split(",").forEach((inviteeUserID) {
+      if (inviteeUserID.isEmpty) {
+        return;
+      }
 
-    invitees.add(ZegoUIKitUser(
-      id: inviteeUserID,
-      name: 'user_$inviteeUserID',
-    ));
-  });
+      invitees.add(ZegoUIKitUser(
+        id: inviteeUserID,
+        name: 'user_$inviteeUserID',
+      ));
+    });
 
-  return invitees;
+    return invitees;
+  }
 }

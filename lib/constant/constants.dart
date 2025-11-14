@@ -17,8 +17,8 @@ const TextStyle textStyle = TextStyle(
 );
 
 Map<String, WidgetBuilder> routes = {
-  PageRouteNames.login: (context) => const LoginScreen(),
-  PageRouteNames.home: (context) => const ZegoUIKitPrebuiltCallMiniPopScope(
+  PageRouteNames.login: (context) =>  LoginScreen(),
+  PageRouteNames.home: (context) =>  ZegoUIKitPrebuiltCallMiniPopScope(
         child: HomeScreen(),
       ),
 };

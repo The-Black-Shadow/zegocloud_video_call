@@ -1,12 +1,8 @@
-// Flutter imports:
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
 import 'package:zego_uikit/zego_uikit.dart';
 
-// Project imports:
 import 'constants.dart';
 import 'login_service.dart';
 import 'util.dart';

@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 import 'package:zego_uikit/zego_uikit.dart';
 
-import 'constants.dart';
-import 'login_service.dart';
-import 'util.dart';
+import '../../constant/constants.dart';
+import '../services/login_service.dart';
+import '../../utils/util.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => LoginPageState();
+  State<StatefulWidget> createState() => LoginScreenState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class LoginScreenState extends State<LoginScreen> {
   final _userIDTextCtrl = TextEditingController(text: 'user_id');
   final _passwordVisible = ValueNotifier<bool>(false);
 

@@ -92,18 +92,25 @@ zegocloud_video_call/
 ├── android/                    # Android native code
 ├── ios/                        # iOS native code
 ├── lib/
-│   ├── common.dart            # Shared utilities and widgets
-│   ├── constants.dart         # App constants and route names
-│   ├── home_page.dart         # Home screen with call functionality
-│   ├── login_page.dart        # User authentication screen
-│   ├── login_service.dart     # Login logic and ZegoCloud initialization
+│   ├── constant/
+│   │   ├── common.dart        # Shared utilities and custom widgets
+│   │   └── constants.dart     # App constants and route names
+│   ├── screen/
+│   │   ├── home_screen/
+│   │   │   └── home_screen.dart    # Home screen with call functionality
+│   │   ├── login_screen/
+│   │   │   └── login_screen.dart   # User authentication screen
+│   │   └── services/
+│   │       └── login_service.dart  # Login logic and ZegoCloud initialization
+│   ├── utils/
+│   │   └── util.dart          # Helper functions
 │   ├── main.dart              # App entry point
-│   ├── my_app.dart            # Main app widget configuration
-│   └── util.dart              # Helper functions
+│   └── my_app.dart            # Main app widget configuration
 ├── assets/
 │   └── image/                 # App images and assets
 ├── .env                       # Environment variables (create this)
 ├── .env.example              # Example environment file
+├── .fvmrc                    # FVM Flutter version configuration
 ├── pubspec.yaml              # Dependencies and project config
 └── README.md                 # This file
 ```

@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:faker/faker.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zegocloud_video_call/constant/constants.dart';
+import 'package:zegocloud_video_call/models/user_info.dart';
+import 'package:zegocloud_video_call/routes/app_routes.dart';
 
 
 import 'controller/home_controller.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 
-import '../../constant/constants.dart';
+import '../../routes/app_routes.dart';
 import 'controller/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {

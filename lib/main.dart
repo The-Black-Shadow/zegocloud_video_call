@@ -6,9 +6,7 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zegocloud_video_call/my_app.dart';
-
 import 'models/user_info.dart';
-import 'screen/services/login_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

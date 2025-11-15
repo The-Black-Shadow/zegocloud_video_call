@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zegocloud_video_call/main.dart';
 import 'package:zegocloud_video_call/models/user_info.dart';
 import 'package:zegocloud_video_call/routes/app_routes.dart';
 import 'package:zegocloud_video_call/routes/app_routes_file.dart';

@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zego_uikit/zego_uikit.dart';
-
-import '../../routes/app_routes.dart';
+import 'package:zegocloud_video_call/constant/text_style.dart';
 import 'controller/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {

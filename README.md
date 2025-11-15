@@ -2,6 +2,8 @@
 
 A professional Flutter starter template for building video and audio calling applications using ZegoCloud's UIKit. This project provides a complete implementation of one-on-one and group calling features with offline call invitation support, making it easy to integrate real-time communication into your Flutter apps.
 
+> **Note:** This is the **GetX implementation branch** (`getx_implement`). For the vanilla Flutter implementation without state management, check out the `main` branch.
+
 ## 🌟 Features
 
 - ✅ **One-on-One Video/Audio Calls** - Crystal clear video and audio calling
@@ -9,9 +11,11 @@ A professional Flutter starter template for building video and audio calling app
 - ✅ **Offline Call Invitations** - Receive call notifications even when app is closed
 - ✅ **Call Minimization** - Continue using other features while on a call
 - ✅ **Custom Avatars** - Personalized user experience
+- ✅ **GetX State Management** - Reactive and efficient state management
+- ✅ **Clean Architecture** - Organized folder structure with MVC pattern
 - ✅ **Environment Variables** - Secure credential management with `.env` file
 - ✅ **Android & iOS Support** - Full cross-platform compatibility
-- ✅ **Production Ready** - Clean architecture and professional code structure
+- ✅ **Production Ready** - Professional code structure and best practices
 
 ## 📋 Prerequisites
 
@@ -92,18 +96,36 @@ zegocloud_video_call/
 ├── android/                    # Android native code
 ├── ios/                        # iOS native code
 ├── lib/
-│   ├── common.dart            # Shared utilities and widgets
-│   ├── constants.dart         # App constants and route names
-│   ├── home_page.dart         # Home screen with call functionality
-│   ├── login_page.dart        # User authentication screen
-│   ├── login_service.dart     # Login logic and ZegoCloud initialization
+│   ├── constant/
+│   │   ├── common.dart        # Shared utilities and custom widgets
+│   │   └── constants.dart     # App constants and configurations
+│   ├── models/
+│   │   └── user_info.dart     # User data models
+│   ├── routes/
+│   │   ├── app_routes.dart    # Route definitions
+│   │   ├── app_routes_file.dart  # Route configuration
+│   │   └── bindings/
+│   │       └── all_bindings.dart  # GetX dependency injection
+│   ├── screen/
+│   │   ├── home_screen/
+│   │   │   ├── home_screen.dart      # Home UI
+│   │   │   └── controller/
+│   │   │       └── home_controller.dart  # Home logic with GetX
+│   │   ├── login_screen/
+│   │   │   ├── login_screen.dart     # Login UI
+│   │   │   └── controller/
+│   │   │       └── login_controller.dart  # Login logic with GetX
+│   │   └── services/
+│   │       └── login_service.dart    # ZegoCloud service initialization
+│   ├── utils/
+│   │   └── util.dart          # Helper functions
 │   ├── main.dart              # App entry point
-│   ├── my_app.dart            # Main app widget configuration
-│   └── util.dart              # Helper functions
+│   └── my_app.dart            # Main app widget with GetX configuration
 ├── assets/
 │   └── image/                 # App images and assets
 ├── .env                       # Environment variables (create this)
 ├── .env.example              # Example environment file
+├── .fvmrc                    # FVM Flutter version configuration
 ├── pubspec.yaml              # Dependencies and project config
 └── README.md                 # This file
 ```
@@ -207,12 +229,44 @@ implementation 'com.google.firebase:firebase-messaging:21.1.0'
 
 ```yaml
 dependencies:
+  # ZegoCloud SDKs
   zego_uikit: ^2.28.23
   zego_uikit_signaling_plugin: ^2.8.15
   zego_uikit_prebuilt_call: ^4.17.9
+  
+  # State Management
+  get: ^4.7.2
+  
+  # Core Utilities
   flutter_dotenv: ^5.1.0
   shared_preferences: ^2.2.3
+  
+  # UI & Utilities
+  faker: ^2.1.0
+  cached_network_image: ^3.3.0
+  connectivity_plus: ^6.1.5
 ```
+
+## 🎨 GetX Architecture
+
+This branch implements **GetX** for state management, dependency injection, and route management:
+
+### Controllers
+- **LoginController**: Handles login logic and navigation
+- **HomeController**: Manages call invitations and user interactions
+
+### Bindings
+- **AllBindings**: Centralized dependency injection for all controllers
+
+### Routes
+- Declarative routing with GetX
+- Named routes with bindings
+- Type-safe navigation
+
+### State Management
+- Reactive programming with `.obs` and `Obx`
+- Efficient rebuilds with GetBuilder
+- Dependency injection with `Get.put()` and `Get.find()`
 
 ## 📝 Environment Variables
 
@@ -293,9 +347,30 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [ ] Add recording features
 - [ ] Create admin dashboard
 - [ ] Add analytics and monitoring
+- [ ] Implement more GetX patterns (GetxService, Workers)
+- [ ] Add internationalization with GetX
+
+## 🔀 Branches
+
+This repository has two main branches:
+
+### `main` Branch
+- Vanilla Flutter implementation
+- StatefulWidget with setState
+- Simple and straightforward
+- Perfect for beginners
+
+### `getx_implement` Branch (Current)
+- GetX state management
+- Clean architecture with MVC pattern
+- Reactive programming
+- Better for scalable applications
+- Recommended for production apps
+
+Choose the branch that best fits your project needs!
 
 ---
 
-**Built with ❤️ using Flutter and ZegoCloud**
+**Built with ❤️ using Flutter, GetX, and ZegoCloud**
 
 *Star ⭐ this repo if you find it helpful!*

@@ -294,6 +294,25 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [ ] Create admin dashboard
 - [ ] Add analytics and monitoring
 
+## 🔀 Branches
+
+This repository has two main branches:
+
+### `main` Branch (Current)
+- Vanilla Flutter implementation
+- StatefulWidget with setState
+- Simple and straightforward
+- Perfect for beginners
+
+### `getx_implement` Branch
+- GetX state management
+- Clean architecture with MVC pattern
+- Reactive programming
+- Better for scalable applications
+- Recommended for production apps
+
+Choose the branch that best fits your project needs!
+
 ---
 
 **Built with ❤️ using Flutter and ZegoCloud**

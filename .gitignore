@@ -48,7 +48,7 @@ app.*.map.json
 
 # private
 google-services.json
-.env
 
 # FVM Version Cache
 .fvm/
+node_modules

@@ -5,18 +5,17 @@ import 'package:get/get.dart';
 import 'package:faker/faker.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zegocloud_video_call/constant/constants.dart';
-
+import 'package:zegocloud_video_call/models/user_info.dart';
+import 'package:zegocloud_video_call/routes/app_routes.dart';
 
 import 'controller/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({Key? key}) : super(key: key);
-    final controller = Get.find<HomeController>();
+  HomeScreen({Key? key}) : super(key: key);
+  final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -56,9 +55,8 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.exit_to_app_sharp),
             iconSize: 20,
             color: Colors.white,
-            onPressed: isMinimized
-                ? null
-                : () => controller.performLogout(context),
+            onPressed:
+                isMinimized ? null : () => controller.performLogout(context),
           );
         },
       ),
@@ -80,7 +78,7 @@ class HomeScreen extends StatelessWidget {
           if (0 == index) {
             inviteeUsersIDTextCtrl = controller.singleInviteeUserIDTextCtrl;
             userInfo = [
-              const Text('invitee id ('),
+              const Text('invitee id : '),
               _inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
@@ -90,12 +88,11 @@ class HomeScreen extends StatelessWidget {
                 labelText: "invitee ID",
                 hintText: "plz enter invitee ID",
               ),
-              const Text(')'),
             ];
           } else if (1 == index) {
             inviteeUsersIDTextCtrl = controller.groupInviteeUserIDsTextCtrl;
             userInfo = [
-              const Text('group id ('),
+              const Text('group id : '),
               _inviteeIDFormField(
                 textCtrl: inviteeUsersIDTextCtrl,
                 formatters: [
@@ -105,7 +102,6 @@ class HomeScreen extends StatelessWidget {
                 labelText: "invitees ID",
                 hintText: "separate IDs by ','",
               ),
-              const Text(')'),
             ];
           } else {
             inviteeUsersIDTextCtrl = TextEditingController();
@@ -199,7 +195,8 @@ class HomeScreen extends StatelessWidget {
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: inviteeUsersIDTextCtrl,
       builder: (context, inviteeUserID, _) {
-        var invitees = _getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
+        var invitees =
+            _getInvitesFromTextCtrl(inviteeUsersIDTextCtrl.text.trim());
 
         return ZegoSendCallInvitationButton(
           isVideoCall: isVideoCall,

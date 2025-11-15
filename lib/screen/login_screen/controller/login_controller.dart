@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zegocloud_video_call/constant/constants.dart';
+import 'package:zegocloud_video_call/routes/app_routes.dart';
 import 'package:zegocloud_video_call/screen/services/login_service.dart';
 import 'package:zegocloud_video_call/utils/util.dart';
 
@@ -48,6 +48,6 @@ class LoginController extends GetxController {
     await onUserLogin();
     
     // Navigate to home screen
-    Get.offNamed(PageRouteNames.home);
+    Get.offNamed(AppRoutes.instance.home);
   }
 }

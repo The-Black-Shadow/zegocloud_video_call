@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 import '../../../routes/app_routes.dart';
-import '../../services/login_service.dart';
+import '../../../services/login_service.dart';
 
 class HomeController extends GetxController {
   // Text controllers for invitee IDs

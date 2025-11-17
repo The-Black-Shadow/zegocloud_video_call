@@ -4,7 +4,7 @@ import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zegocloud_video_call/models/user_info.dart';
 import 'package:zegocloud_video_call/routes/app_routes.dart';
 import 'package:zegocloud_video_call/routes/app_routes_file.dart';
-import 'package:zegocloud_video_call/screen/services/login_service.dart';
+import 'package:zegocloud_video_call/services/login_service.dart';
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
